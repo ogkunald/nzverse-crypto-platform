@@ -4,6 +4,7 @@ import {Row,Select,Typography,Col,Avatar,Card} from 'antd';
 import moment from 'moment';
 import { useGetCryptoNewsQuery } from '../services/cryptoNewsApi';
 import { useGetCryptosQuery } from '../services/cryptoApi';
+import Loader from './Loader';
 
 const demoImage = 'https://www.bing.com/th?id=OVFT.mpzuVZnv8dwIMRfQGPbOPC&pid=News';
 const {Text,Title} = Typography;
@@ -12,7 +13,7 @@ const News = ({simplified}) => {
   const [newsCategory, setNewsCategory] = useState('Cryptocurrency');
   const {data:cryptoNews} = useGetCryptoNewsQuery({newsCategory,count: simplified? 6 : 12});
   const {data} = useGetCryptosQuery(100);
-  if (!cryptoNews?.value) return 'Loading...';
+  if (!cryptoNews?.value) return <Loader/>
   return (
         <>
           <Row gutter={[24,24]}>
@@ -28,7 +29,7 @@ const News = ({simplified}) => {
                       <Option 
                       value = 'Cryptocurrency'>Cryptocurrency</Option>
                       {data?.data?.coins.map((coin)=> 
-                          <Option value={coin.name}>{coin.name}</Option>
+                          <Option value={coin.name}>{coin.name} </Option>
                       )}
                   </Select>
               </Col>
